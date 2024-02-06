@@ -28,10 +28,30 @@ class LinkedList {
             tail = newNode;
             length = 1;
         }
+        
+        /*
+        ~LinkedList() = default;
+        default destructor wont work with linkedlist class.
+        with default destructor, it will only delete head, tail and length. all the other nodes will remain.
+        */
+       ~LinkedList(){
+        
+        Node* temp= head;
+        while(head){
+            delete temp;
+            head=head->next;
+            temp=head;
+        }
+
+        delete head;
+        delete tail;
+        length=0;
+
+       }
 
         void printList(){
             Node* temp = head;
-            while(temp){ //equivalent as while(temp!=nullptr)
+            while(temp){ //temp!=nullptr
                 cout << temp->value <<endl;
                 temp = temp->next;
             }
@@ -60,6 +80,8 @@ int main() {
     cout << "Head is: " << (myLinkedList->getHead())->value <<endl; 
     cout << "Tail is: " << (myLinkedList->getTail())->value <<endl; 
     cout << "Length of linked list is: " << (myLinkedList->getLength()) <<endl; 
+
+    delete myLinkedList;
 
     return 0;
        
